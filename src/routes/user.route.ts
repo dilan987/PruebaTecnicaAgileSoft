@@ -11,7 +11,7 @@ export const register = (router: Router): void => {
         controller.getAll(req, res);
     });
 
-    router.get('/get/', (req: Request, res: Response) => {
+    router.get('/get/', [verifyJWT] , (req: Request, res: Response) => {
         controller.getUser(req, res);
     });
 

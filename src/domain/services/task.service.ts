@@ -1,4 +1,4 @@
-import { Task } from 'domain/entities/task.ent';
+import { Task } from '../entities/task.ent';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -10,6 +10,8 @@ export class TaskDomainService {
             '',
             false,
             '',
+            new Date(),
+            new Date()
         );
     }
 }

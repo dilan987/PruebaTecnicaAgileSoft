@@ -9,6 +9,7 @@ import { TaskAdapter } from "../../infrastructure/adapters/task.adapter";
 import { decrypt, encrypt } from "../config/encryptData";
 
 import { TaskModel, initTaskModel } from "../models/task.model";
+import { TaskRepository } from "./task.repository";
 
 
 interface Filters {
@@ -73,8 +74,7 @@ export class UserRepository extends UserAdapter {
     async findMyUser(id: string): Promise<Object | Error> {
         
         await initUserModel()
-        await initTaskModel()
-        const taskAdapter: TaskAdapter = new TaskAdapter
+        const taskRepository = await new TaskRepository()
         try {
                 const usersInfo = await UserModel.findOne({where:{id: id}
                 })
@@ -82,29 +82,16 @@ export class UserRepository extends UserAdapter {
                 if (!adapter) {
                     throw new Error('Error in map to domain');
                 }
-                const tasks = await TaskModel.findAll({where: {userId: adapter.id}})
-                const adapterTasks = taskAdapter.mapToDomainArray(tasks)
+                let tasks = await taskRepository.findAll()
+                if(tasks instanceof Error) tasks = []
                 adapter.password = await decrypt(adapter.password)
-                const taskFilter = adapterTasks.map(task => {
-                    let Status
-                    if(task.status == true) Status = 'Resuelto'
-                    else Status = 'No Resuelto'
-                    const filteredTask ={
-                        id: task.id,
-                        name:task.name,
-                        status: Status,
-                        description: task.description,
-                        createdOn : task.createdOn,
-                        updatedOn: task.updatedOn
-                    }
-                    return filteredTask;
-                });
+                
                 const dto = {
                     id: adapter.id,
                     name: adapter.name,
                     userName: adapter.userName,
                     password : adapter.password,
-                    usertasks: taskFilter
+                    usertasks: tasks
                 }
                 return dto
         } catch (error: any) {

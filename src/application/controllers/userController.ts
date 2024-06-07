@@ -73,8 +73,7 @@ export default class UserController implements Controller {
     }
 
     async myUserInfo(req: Request, res: Response): Promise<void> {
-        const taskAdapter: TaskAdapter = new TaskAdapter();
-        let repository = await new UserRepository(taskAdapter)
+        let repository = await new UserRepository()
         try {
             const token = req.cookies["token"] 
             const decoded = jwt.verify(token, 'your-secret-key') as JwtPayload;
