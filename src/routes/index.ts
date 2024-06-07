@@ -6,6 +6,7 @@ export function registerRoutes(router: Router): void {
     routes.map(route => register(route, router));
 }
 
+
 function register(routePath: string, router: Router) {
     const { register } = require(routePath) as { register: (router: Router) => void };
     register(router);

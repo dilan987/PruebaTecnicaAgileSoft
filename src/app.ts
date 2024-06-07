@@ -1,5 +1,7 @@
 import { Server } from './server';
+import { config } from 'dotenv';
 
+config()
 export class BackendApp {
     server?: Server;
 
@@ -12,6 +14,7 @@ export class BackendApp {
     get httpServer(): Server['httpServer'] | undefined {
         return this.server?.getHTTPServer();
     }
+
 
     async stop(): Promise<void> {
         return this.server?.stop();
