@@ -72,13 +72,14 @@ export class TaskRepository extends TaskAdapter {
             return err
         }
     }
-    async create(taskData: Partial<Task>): Promise<Task | Error> {
+    async create(taskData: Partial<Task>, userId: string): Promise<Task | Error> {
         await initTaskModel()
-        const requireAttributes: (keyof Task)[] = ['name','userId'];
+        const requireAttributes: (keyof Task)[] = ['name'];
 
         try {
             const entityTask = this.taskDomainService.creatEmptyEntity();
             Object.assign(entityTask,taskData);
+            entityTask.userId = userId
 
             for (const attr of requireAttributes) {
                 if(!(attr in entityTask)) {
@@ -99,12 +100,14 @@ export class TaskRepository extends TaskAdapter {
             return err
          }
     }
-
-    async update( taskData: any): Promise <Task | Error> {
+    async update( taskData: any, userId: string): Promise <Task | Error> {
         const mutableProperties: Array<TaskMutableProperties> = ['name', 'status' , 'description'];
 
         await initTaskModel()
         try {
+            const tasksInfo = await TaskModel.findOne({where:{ userId: userId, id:taskData.id}})
+            if(tasksInfo == null) throw new Error('the selected task is not found with this user');
+
             const task = await TaskModel.findByPk(taskData.id);
             if(!task){
                 throw new Error('task not valid');
@@ -132,10 +135,11 @@ export class TaskRepository extends TaskAdapter {
             return err
          }
     }
-    
-    async delete(id: string): Promise <boolean | Error> {
+    async delete(id: string, userId: string): Promise <boolean | Error> {
         await initTaskModel()
         try {
+            const tasksInfo = await TaskModel.findOne({where:{ userId: userId, id:id}})
+            if(tasksInfo == null) throw new Error('the selected task is not found with this user');
             const result = await TaskModel.destroy({ where: { id}});
             return result > 0;   
         } catch (error: any) {
