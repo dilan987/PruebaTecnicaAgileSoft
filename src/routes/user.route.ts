@@ -1,16 +1,16 @@
 import { verifyJWT } from "../application/middlewares/verifySignup";
 import UserController from "../application/controllers/userController";
 import {Request, Response, Router } from "express";
-import cookieParser from 'cookie-parser';
+
 
 export const register = (router: Router): void => {
     const controller = new UserController();
 
-
+    //get opcional, ver todos los usuarios
     router.get('/get-all/user',[verifyJWT] ,(req: Request, res: Response) => {
         controller.getAll(req, res);
     });
-
+    //get opcional, ver un usuario cualquiera
     router.get('/get/', [verifyJWT] , (req: Request, res: Response) => {
         controller.getUser(req, res);
     });
