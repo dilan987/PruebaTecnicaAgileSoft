@@ -15,3 +15,13 @@ En este proyecto se encuentra el código para la solución Backend de la prueba 
 Para la ejecución inicial, utilice el comando:
 ```bash
 npm run dev
+```
+Para test utilice el comando 
+```
+npm run test
+```
+## Informacion IMPORTANTE para pruebas
+utilice postman para la organziacion de los endpoint y testeo el login almacena en las cookies de forma automatica el token de sesion del usuario por lo que solo es necesario loguear para usar la app,
+todos los endpoint requieren esta cookie.  
+
+## Un saludo y espero podamos trabajar juntos pronto.
