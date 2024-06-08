@@ -5,7 +5,7 @@ Este repositorio incluye:
 - Información de los tests
 - El código fuente del repositorio
 - Un archivo UML con un pequeño diagrama de modelo entidad-relación
-- Un archivo SQL para crear la base de datos de forma local y probar el código
+- Un archivo SQL para crear la base de datos de forma local y probar el código( utilice PostgreSQL v15)
 - El archivo `.env` con las variables necesarias (NO recomendable en aplicaciones reales)
 - coleccion de postman si se desea probar.
 
