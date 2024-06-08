@@ -9,6 +9,10 @@ Este repositorio incluye:
 - El archivo `.env` con las variables necesarias (NO recomendable en aplicaciones reales)
 - coleccion de postman si se desea probar.
 
+## Información general
+- Se trabajo con typescript, sequelize, express, jest.
+- Se utilizo como base la arquitectura hexagonal y DDD para estructurar el proyecto.
+
 ## Introducción
 En este proyecto se encuentra el código para la solución Backend de la prueba técnica referente a un APIREST TodoList. 
 
